@@ -30,6 +30,7 @@ app.get('/api/tours/:id', (req, res) => {
 });
 
 // handling Update tour
+
 app.patch('/api/tours/:id', (req, res) => {
   const id = req.params.id * 1;
   const tour = tours.find((el) => el.id === id);
