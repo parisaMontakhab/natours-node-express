@@ -29,6 +29,20 @@ app.get('/api/tours/:id', (req, res) => {
   res.status(200).json({ status: 'success', data: { tour } });
 });
 
+// handling Update tour
+app.patch('/api/tours/:id', (req, res) => {
+  const id = req.params.id * 1;
+  const tour = tours.find((el) => el.id === id);
+
+  if (!tour) {
+    return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
+  }
+
+  res
+    .status(200)
+    .json({ status: 'success', data: { tour: 'Updating the data...' } });
+});
+
 //handling create new tour
 
 app.post('/api/tours', (req, res) => {
