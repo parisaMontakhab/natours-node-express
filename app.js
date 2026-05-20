@@ -1,12 +1,18 @@
+// requires
+
 const express = require('express');
 
 const fs = require('fs');
 
+const morgan = require('morgan');
+
 const app = express();
 
+//middleware
+app.use(morgan('dev'));
 app.use(express.json());
 
-// functions
+// routes handling
 
 const getAllTour = (req, res) => {
   res.status(200).json({ status: 'success', data: { tours } });
@@ -66,13 +72,14 @@ const createNewTour = (req, res) => {
   );
 };
 
-// handling http method
+// routes
 
 app.route('/api/tours').get(getAllTour).post(createNewTour);
 
 app.route('/api/tours/:id').get(getTour).patch(updateTour).delete(deleteTour);
 
-// port section
+// stat the server
+
 const port = 3000;
 
 app.listen(port, () => {
