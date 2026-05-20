@@ -14,13 +14,13 @@ app.use(express.json());
 
 // routes handling
 
-const getAllTour = (req, res) => {
-  res.status(200).json({ status: 'success', data: { tours } });
-};
-
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`),
 );
+
+const getAllTour = (req, res) => {
+  res.status(200).json({ status: 'success', data: { tours } });
+};
 
 const getTour = (req, res) => {
   const id = req.params.id * 1;
@@ -72,11 +72,37 @@ const createNewTour = (req, res) => {
   );
 };
 
+const users = JSON.parse(
+  fs.readFileSync(`${__dirname}/dev-data/data/users.json`),
+);
+
+const getAllUsers = (req, res) => {
+  res.status(200).json({ status: 'success', data: { users } });
+};
+
+const getUser = (req, res) => {};
+
+const createNewUser = (req, res) => {};
+
+const updateUser = (req, res) => {};
+
+const deleteUser = (req, res) => {};
+
 // routes
 
-app.route('/api/tours').get(getAllTour).post(createNewTour);
+const tourRouter = express.Router();
+const userRouter = express.Router();
 
-app.route('/api/tours/:id').get(getTour).patch(updateTour).delete(deleteTour);
+tourRouter.route('/').get(getAllTour).post(createNewTour);
+
+tourRouter.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
+
+userRouter.route('/').get(getAllUsers).post(createNewUser);
+
+userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
+
+app.use('/api/tours', tourRouter);
+app.use('/api/users', userRouter);
 
 // stat the server
 
