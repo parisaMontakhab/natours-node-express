@@ -6,19 +6,17 @@ const app = express();
 
 app.use(express.json());
 
-// handling get method
+// functions
+
+const getAllTour = (req, res) => {
+  res.status(200).json({ status: 'success', data: { tours } });
+};
 
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`),
 );
 
-app.get('/api/tours', (req, res) => {
-  res.status(200).json({ status: 'success', data: { tours } });
-});
-
-// handling get tour by Id
-
-app.get('/api/tours/:id', (req, res) => {
+const getTour = (req, res) => {
   const id = req.params.id * 1;
   const tour = tours.find((el) => el.id === id);
 
@@ -27,11 +25,9 @@ app.get('/api/tours/:id', (req, res) => {
   }
 
   res.status(200).json({ status: 'success', data: { tour } });
-});
+};
 
-// handling Update tour
-
-app.patch('/api/tours/:id', (req, res) => {
+const updateTour = (req, res) => {
   const id = req.params.id * 1;
   const tour = tours.find((el) => el.id === id);
 
@@ -42,11 +38,9 @@ app.patch('/api/tours/:id', (req, res) => {
   res
     .status(200)
     .json({ status: 'success', data: { tour: 'Updating the data...' } });
-});
+};
 
-//handling Delete tour
-
-app.delete('/api/tours/:id', (req, res) => {
+const deleteTour = (req, res) => {
   const id = req.params.id * 1;
   const tour = tours.find((el) => el.id === id);
 
@@ -55,11 +49,9 @@ app.delete('/api/tours/:id', (req, res) => {
   }
 
   res.status(204).json({ status: 'success', data: null });
-});
+};
 
-//handling create new tour
-
-app.post('/api/tours', (req, res) => {
+const createNewTour = (req, res) => {
   const newID = tours[tours.length - 1].id + 1;
   const newTour = Object.assign({ id: newID }, req.body);
 
@@ -72,8 +64,15 @@ app.post('/api/tours', (req, res) => {
       res.status(201).json({ status: 'success', data: { tour: newTour } });
     },
   );
-});
+};
 
+// handling http method
+
+app.route('/api/tours').get(getAllTour).post(createNewTour);
+
+app.route('/api/tours/:id').get(getTour).patch(updateTour).delete(deleteTour);
+
+// port section
 const port = 3000;
 
 app.listen(port, () => {
