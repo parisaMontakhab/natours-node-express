@@ -5,6 +5,7 @@ const express = require('express');
 const fs = require('fs');
 
 const morgan = require('morgan');
+const { json } = require('stream/consumers');
 
 const app = express();
 
@@ -72,6 +73,8 @@ const createNewTour = (req, res) => {
   );
 };
 
+//users
+
 const users = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/users.json`),
 );
@@ -80,13 +83,72 @@ const getAllUsers = (req, res) => {
   res.status(200).json({ status: 'success', data: { users } });
 };
 
-const getUser = (req, res) => {};
+const createNewUser = (req, res) => {
+  const newID = Date.now().toString();
 
-const createNewUser = (req, res) => {};
+  const newUser = Object.assign({ _id: newID }, req.body);
 
-const updateUser = (req, res) => {};
+  users.push(newUser);
 
-const deleteUser = (req, res) => {};
+  fs.writeFile(
+    `${__dirname}/dev-data/data/users.json`,
+    JSON.stringify(users),
+    (err) => {
+      res.status(201).json({ status: 'success', data: { user: newUser } });
+    },
+  );
+};
+
+const getUser = (req, res) => {
+  const id = req.params.id;
+  const user = users.find((el) => el._id === id);
+
+  if (!user) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: { user },
+  });
+};
+
+const updateUser = (req, res) => {
+  const id = req.params.id;
+  const user = users.find((el) => el._id === id);
+
+  if (!user) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: { user: 'Updating the data...' },
+  });
+};
+
+const deleteUser = (req, res) => {
+  const id = req.params.id;
+  const user = users.find((el) => el._id === id);
+
+  if (!user) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+};
 
 // routes
 

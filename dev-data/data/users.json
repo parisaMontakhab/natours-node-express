@@ -178,5 +178,14 @@
     "active": true,
     "photo": "user-20.jpg",
     "password": "$2a$12$uA9FsDw63v6dkJKGlLQ/8ufYBs8euB7kqIQewyYlZXU5azEKeLEky"
+  },
+  {
+    "_id": "1779275385568",
+    "name": "Parrisa Mont",
+    "email": "Parrisa@example.com",
+    "role": "user",
+    "active": true,
+    "photo": "user-21.jpg",
+    "password": "$2a$12$VPYaAAOsI44uhq11WbZ5R.cHT4.fGdlI9gKJd95jmYw3.sAsmbvBq"
   }
 ]
