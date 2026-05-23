@@ -11,6 +11,15 @@ exports.checkID = (req, res, next, val) => {
   next();
 };
 
+exports.checkedBody = (req, res, next) => {
+  if (!req.body.name || !req.body.price) {
+    return res
+      .status(400)
+      .json({ status: 'fail', message: 'Missing Name or Price' });
+  }
+  next();
+};
+
 exports.getAllTour = (req, res) => {
   res.status(200).json({ status: 'success', data: { tours } });
 };
