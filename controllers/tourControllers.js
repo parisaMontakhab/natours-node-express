@@ -2,7 +2,34 @@ const Tour = require('../models/tourModels');
 
 exports.getAllTour = async (req, res) => {
   try {
-    const tours = await Tour.find();
+    //const tours = await Tour.find();
+
+    // const tours = await Tour.find()
+    //   .where('duration')
+    //   .equals(5)
+    //   .where('difficulty')
+    //   .equals('easy');
+
+    //FILTERING
+    const queryObj = { ...req.query };
+
+    const excludeFields = ['page', 'sort', 'fields', 'limit'];
+    excludeFields.forEach((el) => delete queryObj[el]);
+
+    //ADVANCE FILTERING
+
+    let queryString = JSON.stringify(queryObj);
+    queryString = queryString.replace(
+      /\b(gte|gt|lte|lt)\b/g,
+      (match) => `$${match}`,
+    );
+
+    const query = Tour.find(JSON.parse(queryString));
+
+    console.log(req.query);
+    //EXECUTE QUERY
+    const tours = await query;
+
     res.status(200).json({
       status: 'success',
       result: tours.length,
