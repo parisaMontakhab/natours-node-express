@@ -7,9 +7,14 @@ const {
   deleteUser,
   checkID,
 } = require('../controllers/userControllers');
+
+const { signup } = require('../controllers/authController');
+
 const router = express.Router();
 
 router.param('id', checkID);
+
+router.post('/signup', signup);
 
 router.route('/').get(getAllUsers).post(createNewUser);
 
