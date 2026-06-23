@@ -8,13 +8,15 @@ const {
   checkID,
 } = require('../controllers/userControllers');
 
-const { signup } = require('../controllers/authController');
+const { signup, login } = require('../controllers/authController');
 
 const router = express.Router();
 
 router.param('id', checkID);
 
 router.post('/signup', signup);
+
+router.post('/login', login);
 
 router.route('/').get(getAllUsers).post(createNewUser);
 
