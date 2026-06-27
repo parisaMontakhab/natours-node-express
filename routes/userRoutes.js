@@ -8,7 +8,12 @@ const {
   checkID,
 } = require('../controllers/userControllers');
 
-const { signup, login } = require('../controllers/authController');
+const {
+  signup,
+  login,
+  forgotPassword,
+  resetPassword,
+} = require('../controllers/authController');
 
 const router = express.Router();
 
@@ -17,6 +22,10 @@ router.param('id', checkID);
 router.post('/signup', signup);
 
 router.post('/login', login);
+
+router.post('/forgotPassword', forgotPassword);
+
+router.patch('/resetPassword/:token', resetPassword);
 
 router.route('/').get(getAllUsers).post(createNewUser);
 
