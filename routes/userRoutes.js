@@ -4,9 +4,9 @@ const {
   createNewUser,
   getUser,
   updateUser,
-  deleteUser,
   checkID,
   updateMe,
+  deleteMe,
 } = require('../controllers/userControllers');
 
 const {
@@ -34,8 +34,10 @@ router.patch('/updateMyPassword', protect, updatePassword);
 
 router.patch('/updateMe', protect, updateMe);
 
+router.delete('/deleteMe', protect, deleteMe);
+
 router.route('/').get(getAllUsers).post(createNewUser);
 
-router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
+router.route('/:id').get(getUser).patch(updateUser);
 
 module.exports = router;
