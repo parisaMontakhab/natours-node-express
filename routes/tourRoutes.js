@@ -18,7 +18,7 @@ router.route('/tour-stats').get(getTourStats);
 
 router.route('/monthly-plan/:year').get(getMonthlyPlan);
 
-router.route('/').get(protect, getAllTour).post(createNewTour);
+router.route('/').get(getAllTour).post(createNewTour);
 
 router
   .route('/:id')
