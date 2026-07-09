@@ -74,6 +74,31 @@ const tourSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    startLocation: {
+      //GeoJson
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point'],
+      },
+      coordinates: [Number],
+      address: String,
+      description: String,
+    },
+    locations: [
+      {
+        type: {
+          type: String,
+          default: 'Point',
+          enum: ['Point'],
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number,
+      },
+    ],
+    guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   },
   {
     toJSON: { virtuals: true },
@@ -91,6 +116,11 @@ tourSchema.pre('save', function () {
   this.slug = slugify(this.name, { lower: true });
 });
 
+// tourSchema.pre('save', async function () {
+//   const guidesPromises = this.guides.map(async (id) => await User.findById(id));
+//   this.guides = await Promise.all(guidesPromises);
+// });
+
 // tourSchema.pre('save', function () {
 //   console.log('MIDDLEWARE RUNNING');
 // });
@@ -101,9 +131,16 @@ tourSchema.pre('save', function () {
 
 // QUERY MIDDLEWARE
 
+// tourSchema.pre(/^find/, function () {
+//   this.find({
+//     secretTour: { $ne: true },
+//   });
+// });
+
 tourSchema.pre(/^find/, function () {
-  this.find({
-    secretTour: { $ne: true },
+  this.populate({
+    path: 'guides',
+    select: '-__v',
   });
 });
 
