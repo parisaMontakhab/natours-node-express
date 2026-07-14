@@ -7,6 +7,7 @@ const {
   checkID,
   updateMe,
   deleteMe,
+  deleteUser,
 } = require('../controllers/userControllers');
 
 const {
@@ -19,8 +20,6 @@ const {
 } = require('../controllers/authController');
 
 const router = express.Router();
-
-router.param('id', checkID);
 
 router.post('/signup', signup);
 
@@ -38,6 +37,6 @@ router.delete('/deleteMe', protect, deleteMe);
 
 router.route('/').get(getAllUsers).post(createNewUser);
 
-router.route('/:id').get(getUser).patch(updateUser);
+router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
 module.exports = router;

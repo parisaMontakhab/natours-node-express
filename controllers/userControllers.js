@@ -2,6 +2,7 @@ const fs = require('fs');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const factory = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -14,18 +15,7 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-exports.checkID = (req, res, next, val) => {
-  if (req.params.id * 1 > users.length) {
-    return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
-  }
-  next();
-};
-
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
-
-  res.status(200).json({ status: 'success', data: { users } });
-});
+exports.getAllUsers = factory.getAll(User);
 
 exports.createNewUser = (req, res) => {
   const newID = Date.now().toString();
@@ -43,22 +33,9 @@ exports.createNewUser = (req, res) => {
   );
 };
 
-exports.getUser = (req, res) => {
-  const id = req.params.id;
-  const user = users.find((el) => el._id === id);
+exports.getUser = factory.getOne(User);
 
-  res.status(200).json({
-    status: 'success',
-    data: { user },
-  });
-};
-
-exports.updateUser = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    data: { user: 'Updating the data...' },
-  });
-};
+exports.updateUser = factory.updateOne(User);
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });
@@ -93,3 +70,5 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.deleteUser = factory.deleteOne(User);
