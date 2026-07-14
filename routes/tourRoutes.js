@@ -19,14 +19,19 @@ router.route('/top-5-cheap').get(aliasTopTours, getAllTour);
 
 router.route('/tour-stats').get(getTourStats);
 
-router.route('/monthly-plan/:year').get(getMonthlyPlan);
+router
+  .route('/monthly-plan/:year')
+  .get(protect, restrictTo('admin', 'lead-guide', 'guide'), getMonthlyPlan);
 
-router.route('/').get(getAllTour).post(createNewTour);
+router
+  .route('/')
+  .get(getAllTour)
+  .post(protect, restrictTo('admin', 'lead-guide'), createNewTour);
 
 router
   .route('/:id')
   .get(getTour)
-  .patch(updateTour)
+  .patch(protect, restrictTo('admin', 'lead-guide'), updateTour)
   .delete(protect, restrictTo('admin', 'lead-guide'), deleteTour);
 
 module.exports = router;

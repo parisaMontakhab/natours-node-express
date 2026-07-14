@@ -7,15 +7,21 @@ const {
   setTourUsersIds,
   getReview,
 } = require('../controllers/reviewControllers');
-const { protect } = require('../controllers/authController');
+const { protect, restrictTo } = require('../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
+
+router.use(protect);
 
 router
   .route('/')
   .get(getAllReviews)
-  .post(protect, setTourUsersIds, createReview);
+  .post(restrictTo('user'), setTourUsersIds, createReview);
 
-router.route('/:id').delete(deleteReview).patch(updateReview).get(getReview);
+router
+  .route('/:id')
+  .delete(restrictTo('user', 'admin'), deleteReview)
+  .patch(restrictTo('user', 'admin'), updateReview)
+  .get(getReview);
 
 module.exports = router;
