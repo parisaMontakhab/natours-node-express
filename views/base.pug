@@ -23,6 +23,10 @@ html(lang="en")
             type="image/png"
             href="/img/favicon.png"
         )
+        link(
+           href='https://api.mapbox.com/mapbox-gl-js/v3.26.0/mapbox-gl.css'
+           rel='stylesheet'
+        )
 
         title Natours | #{title}
 
@@ -45,3 +49,6 @@ html(lang="en")
         //- ========================================
 
         include _footer
+
+        script(src='https://api.mapbox.com/mapbox-gl-js/v3.26.0/mapbox-gl.js')
+        script(src='/js/mapbox.js')
