@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorControllers');
@@ -28,38 +29,43 @@ app.set('query parser', 'extended');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // set security http headers
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: {
+//       directives: {
+//         defaultSrc: ["'self'"],
 
-        scriptSrc: ["'self'", 'https://api.mapbox.com'],
+//         scriptSrc: [
+//           "'self'",
+//           'https://api.mapbox.com',
+//           'https://cdnjs.cloudflare.com',
+//         ],
 
-        styleSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          'https://api.mapbox.com',
-          'https://fonts.googleapis.com',
-        ],
+//         styleSrc: [
+//           "'self'",
+//           "'unsafe-inline'",
+//           'https://api.mapbox.com',
+//           'https://fonts.googleapis.com',
+//         ],
 
-        fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+//         fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
 
-        imgSrc: ["'self'", 'data:', 'blob:'],
+//         imgSrc: ["'self'", 'data:', 'blob:'],
 
-        connectSrc: [
-          "'self'",
-          'https://api.mapbox.com',
-          'https://events.mapbox.com',
-        ],
+//         connectSrc: [
+//           "'self'",
+//           'https://api.mapbox.com',
+//           'https://events.mapbox.com',
+//           'https://cdnjs.cloudflare.com',
+//         ],
 
-        workerSrc: ["'self'", 'blob:'],
+//         workerSrc: ["'self'", 'blob:'],
 
-        childSrc: ["'self'", 'blob:'],
-      },
-    },
-  }),
-);
+//         childSrc: ["'self'", 'blob:'],
+//       },
+//     },
+//   }),
+// );
 
 //development login
 if (process.env.NODE_ENV === 'development') {
@@ -77,6 +83,8 @@ app.use('/api', limiter);
 
 //body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
+
+app.use(cookieParser());
 
 //data sanitization against NoSQL query injection
 app.use(mongoSanitize());
