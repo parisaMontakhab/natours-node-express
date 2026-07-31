@@ -6,7 +6,6 @@ const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
-const { now } = require('mongoose');
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -74,6 +73,16 @@ exports.login = catchAsync(async (req, res, next) => {
 
   //if every thing is ok send token to client
   createSendToke(user, 200, res);
+});
+
+exports.logout = catchAsync(async (req, res, next) => {
+  const cookieOptions = {
+    expires: new Date(0),
+    httpOnly: true,
+  };
+  res.cookie('jwt', 'logged out', cookieOptions);
+
+  res.status(200).json({ status: 'success' });
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
