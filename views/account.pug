@@ -36,6 +36,7 @@ block content
               label.form__label(for='name') Name
               input#name.form__input(
                 type='text'
+                name='name'
                 value=user.name
                 required
               )
@@ -44,6 +45,7 @@ block content
               label.form__label(for='email') Email address
               input#email.form__input(
                 type='email'
+                name='email'
                 value=user.email
                 required
               )
@@ -53,6 +55,7 @@ block content
                 src=`/img/users/${user.photo}`
                 alt='User photo'
               )
+
               a.btn-text(href='#') Choose new photo
 
             .form__group.right
@@ -70,6 +73,7 @@ block content
                 | Current password
               input#password-current.form__input(
                 type='password'
+                name='passwordCurrent'
                 placeholder='••••••••'
                 required
                 minlength='8'
@@ -80,6 +84,7 @@ block content
                 | New password
               input#password.form__input(
                 type='password'
+                name='password'
                 placeholder='••••••••'
                 required
                 minlength='8'
@@ -90,11 +95,12 @@ block content
                 | Confirm password
               input#password-confirm.form__input(
                 type='password'
+                name='passwordConfirm'
                 placeholder='••••••••'
                 required
                 minlength='8'
               )
 
             .form__group.right
-              button.btn.btn--small.btn--green(type='submit')
+              button.btn.btn--small.btn--green.btn--save-password(type='submit')
                 Save password
