@@ -1,10 +1,6 @@
 /* global mapboxgl */
 
-const mapElement = document.getElementById('map');
-
-if (mapElement) {
-  const locations = JSON.parse(mapElement.dataset.locations);
-
+export const displayMap = (locations) => {
   mapboxgl.accessToken =
     'pk.eyJ1IjoicGFyaXNhbW9udGlpIiwiYSI6ImNtczRtdW9vczBreW4yeHFzYTgxaDB6dm8ifQ.KLJlYygJ1OfjDux5wp00ag';
 
@@ -17,11 +13,11 @@ if (mapElement) {
   const bounds = new mapboxgl.LngLatBounds();
 
   locations.forEach((location) => {
-    const markerElement = document.createElement('div');
-    markerElement.className = 'marker';
+    const marker = document.createElement('div');
+    marker.className = 'marker';
 
     new mapboxgl.Marker({
-      element: markerElement,
+      element: marker,
       anchor: 'bottom',
     })
       .setLngLat(location.coordinates)
@@ -39,11 +35,6 @@ if (mapElement) {
   });
 
   map.fitBounds(bounds, {
-    padding: {
-      top: 200,
-      bottom: 150,
-      left: 100,
-      right: 100,
-    },
+    padding: 200,
   });
-}
+};
