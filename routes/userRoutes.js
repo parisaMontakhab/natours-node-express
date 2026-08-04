@@ -4,11 +4,12 @@ const {
   createNewUser,
   getUser,
   updateUser,
-  checkID,
   updateMe,
   deleteMe,
   deleteUser,
   getMe,
+  uploadUserPhoto,
+  resizeUserPhoto,
 } = require('../controllers/userControllers');
 
 const {
@@ -40,7 +41,7 @@ router.patch('/updateMyPassword', updatePassword);
 
 router.get('/me', getMe, getUser);
 
-router.patch('/updateMe', updateMe);
+router.patch('/updateMe', uploadUserPhoto, resizeUserPhoto, updateMe);
 
 router.delete('/deleteMe', deleteMe);
 
