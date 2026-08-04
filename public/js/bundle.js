@@ -8406,12 +8406,21 @@ if (logOutBtn) {
 if (userDataForm) {
   userDataForm.addEventListener('submit', async e => {
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    await (0, _updateSettings.updateSettings)({
-      name,
-      email
-    }, 'data');
+    const form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    const photoInput = document.getElementById('photo');
+    const photo = photoInput.files[0];
+    console.log('SELECTED PHOTO:', photo);
+    if (photo) {
+      form.append('photo', photo);
+    }
+    const success = await (0, _updateSettings.updateSettings)(form, 'data');
+    if (success) {
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
   });
 }
 if (userPasswordForm) {
@@ -8460,7 +8469,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64445" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55818" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

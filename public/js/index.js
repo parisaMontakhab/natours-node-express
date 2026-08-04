@@ -37,16 +37,27 @@ if (userDataForm) {
   userDataForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
+    const form = new FormData();
 
-    await updateSettings(
-      {
-        name,
-        email,
-      },
-      'data',
-    );
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+
+    const photoInput = document.getElementById('photo');
+    const photo = photoInput.files[0];
+
+    console.log('SELECTED PHOTO:', photo);
+
+    if (photo) {
+      form.append('photo', photo);
+    }
+
+    const success = await updateSettings(form, 'data');
+
+    if (success) {
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
   });
 }
 
