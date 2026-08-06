@@ -1,6 +1,7 @@
 extends base
 
 block append head
+  script(src='https://js.stripe.com/v3/')
   script(src='https://api.mapbox.com/mapbox-gl-js/v3.26.0/mapbox-gl.js')
   link(
     href='https://api.mapbox.com/mapbox-gl-js/v3.26.0/mapbox-gl.css'
@@ -11,6 +12,7 @@ block content
   section.section-header
     .header__hero
       .header__hero-overlay &nbsp;
+
       img.header__hero-img(
         src=`/img/tours/${tour.imageCover}`
         alt=tour.name
@@ -24,11 +26,13 @@ block content
         .heading-box__detail
           svg.heading-box__icon
             use(xlink:href='/img/icons.svg#icon-clock')
+
           span.heading-box__text #{tour.duration} days
 
         .heading-box__detail
           svg.heading-box__icon
             use(xlink:href='/img/icons.svg#icon-map-pin')
+
           span.heading-box__text= tour.startLocation.description
 
   section.section-description
@@ -40,24 +44,28 @@ block content
           .overview-box__detail
             svg.overview-box__icon
               use(xlink:href='/img/icons.svg#icon-calendar')
+
             span.overview-box__label Next date
             span.overview-box__text= tour.startDates[0].toLocaleString('en-US', { month: 'long', year: 'numeric' })
 
           .overview-box__detail
             svg.overview-box__icon
               use(xlink:href='/img/icons.svg#icon-trending-up')
+
             span.overview-box__label Difficulty
             span.overview-box__text= tour.difficulty
 
           .overview-box__detail
             svg.overview-box__icon
               use(xlink:href='/img/icons.svg#icon-user')
+
             span.overview-box__label Participants
             span.overview-box__text #{tour.maxGroupSize} people
 
           .overview-box__detail
             svg.overview-box__icon
               use(xlink:href='/img/icons.svg#icon-star')
+
             span.overview-box__label Rating
             span.overview-box__text #{tour.ratingsAverage} / 5
 
@@ -70,6 +78,7 @@ block content
                 src=`/img/users/${guide.photo}`
                 alt=guide.name
               )
+
               span.overview-box__label= guide.role === 'lead-guide' ? 'Lead guide' : 'Tour guide'
               span.overview-box__text= guide.name
 
@@ -98,6 +107,7 @@ block content
               src=`/img/users/${review.user.photo}`
               alt=review.user.name
             )
+
             h6.reviews__user= review.user.name
 
           p.reviews__text= review.review
@@ -129,6 +139,16 @@ block content
 
       .cta__content
         h2.heading-secondary What are you waiting for?
+
         p.cta__text
-          | #{tour.duration} days. 1 adventure. Infinite memories. Make it yours today!
-        button.btn.btn--green.span-all-rows Book tour now!
+          | #{tour.duration} days. 1 adventure. Infinite memories.
+          | Make it yours today!
+
+        if user
+          button#book-tour.btn.btn--green.span-all-rows(
+            data-tour-id=`${tour.id}`
+          )
+            | Book tour now!
+        else
+          a.btn.btn--green.span-all-rows(href='/login')
+            | Log in to book tour
