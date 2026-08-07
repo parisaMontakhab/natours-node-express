@@ -34,13 +34,13 @@ const upload = multer({
 exports.uploadUserPhoto = upload.single('photo');
 
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
-  console.log('FILE RECEIVED:', req.file);
+  // console.log('FILE RECEIVED:', req.file);
 
   if (!req.file) return next();
 
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
-  console.log('NEW FILENAME:', req.file.filename);
+  // console.log('NEW FILENAME:', req.file.filename);
 
   await sharp(req.file.buffer)
     .resize(500, 500)
@@ -48,7 +48,7 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
     .jpeg({ quality: 90 })
     .toFile(`public/img/users/${req.file.filename}`);
 
-  console.log('IMAGE SAVED');
+  // console.log('IMAGE SAVED');
 
   next();
 });
@@ -114,9 +114,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 
   // 2) update user data
   const filteredBody = filterObj(req.body, 'name', 'email');
-  console.log('REQ FILE IN UPDATE ME:', req.file);
+  // console.log('REQ FILE IN UPDATE ME:', req.file);
   if (req.file) filteredBody.photo = req.file.filename;
-  console.log('FILTERED BODY:', filteredBody);
+  // console.log('FILTERED BODY:', filteredBody);
 
   // 3) update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {

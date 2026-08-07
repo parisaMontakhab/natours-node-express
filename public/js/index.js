@@ -46,7 +46,7 @@ if (userDataForm) {
     const photoInput = document.getElementById('photo');
     const photo = photoInput.files[0];
 
-    console.log('SELECTED PHOTO:', photo);
+    // console.log('SELECTED PHOTO:', photo);
 
     if (photo) {
       form.append('photo', photo);
