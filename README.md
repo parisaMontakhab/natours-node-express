@@ -1,80 +1,34 @@
-# 🌍 Natours API
+# 🌍 Natours
 
-A learning project built while completing **The Complete Node.js, Express, MongoDB & More Bootcamp** by Jonas Schmedtmann.
+A production-ready full-stack tour booking application built with **Node.js**, **Express.js**, **MongoDB**, and **Pug**.
 
-The project is a RESTful API and server-rendered web application for a fictional tour booking platform, covering authentication, authorization, payments, image uploads, email services, and security best practices.
-
----
-
-## 🚀 Features
-
-### Authentication
-
-- User signup & login
-- JWT Authentication
-- Password reset
-- Password update
-- Cookie-based authentication
+🚀 **Live Demo:** https://natours-node-express.onrender.com
 
 ---
 
-### Tours
+## ✨ Features
 
-- CRUD operations
-- Geospatial queries
-- Tour statistics
-- Monthly plans
-- Image upload
-- Image resizing with Sharp
-
----
-
-### Reviews
-
-- Create, update and delete reviews
-- One review per user per tour
-- Automatic tour rating calculation
-
----
-
-### Bookings
-
-- Tour booking
-- Stripe Checkout integration
-- Stripe Webhook
-- Booking management
+- 🔐 User Authentication (JWT & Cookies)
+- 👤 User Authorization (User, Guide, Lead Guide, Admin)
+- 🏔️ Tour Management
+- ⭐ Reviews & Ratings
+- 🗺️ Interactive Maps (Mapbox)
+- 💳 Stripe Payment Integration
+- 📧 Email Notifications
+- 📸 Image Upload
+- 🔒 Security Best Practices
+  - Helmet
+  - Rate Limiting
+  - Data Sanitization
+  - XSS Protection
+  - HTTP Parameter Pollution Protection
+- 📱 Server-Side Rendering with Pug
+- 📊 MongoDB Aggregation Pipeline
+- 🌍 Geospatial Queries
 
 ---
 
-### Users
-
-- Update profile
-- Upload profile image
-- Update password
-- Admin user management
-
----
-
-### Email
-
-- Welcome email
-- Password reset email
-- HTML emails using Pug
-
----
-
-### Security
-
-- Helmet
-- CORS
-- HPP
-- Rate Limiting
-- MongoDB Sanitization
-- Data Validation
-
----
-
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
 
 ### Backend
 
@@ -90,42 +44,29 @@ The project is a RESTful API and server-rendered web application for a fictional
 - CSS
 - JavaScript
 
-### Payments
-
-- Stripe Checkout
-- Stripe Webhooks
-
-### Image Upload
-
-- Multer
-- Sharp
-
 ### Authentication
 
 - JWT
-- bcryptjs
+- Cookies
 
-### Email
+### Third-party Services
 
-- Nodemailer
-- Pug
+- Stripe
+- Mapbox
+- Mailtrap
+
+### Deployment
+
+- Render
+- MongoDB Atlas
 
 ---
 
-## 📂 Project Structure
+## 🚀 Live Demo
 
-```
-controllers/
-models/
-routes/
-middleware/
-utils/
-views/
-public/
+### Website
 
-app.js
-server.js
-```
+https://natours-node-express.onrender.com
 
 ---
 
@@ -143,99 +84,87 @@ Install dependencies
 npm install
 ```
 
-Create a `config.env` file
+Create a `config.env` file and configure your environment variables.
 
-```env
-DATABASE=
-DATABASE_PASSWORD=
-
-JWT_SECRET=
-JWT_EXPIRES_IN=
-
-STRIPE_SECRET_KEY=
-
-EMAIL_HOST=
-EMAIL_PORT=
-EMAIL_USERNAME=
-EMAIL_PASSWORD=
-```
-
-Run the project
+Run the application
 
 ```bash
 npm run dev
 ```
 
----
+or
 
-## 📌 Main API Endpoints
-
-### Tours
-
-```
-GET    /api/v1/tours
-GET    /api/v1/tours/:id
-
-POST   /api/v1/tours
-PATCH  /api/v1/tours/:id
-DELETE /api/v1/tours/:id
-```
-
-### Users
-
-```
-POST   /api/v1/users/signup
-POST   /api/v1/users/login
-GET    /api/v1/users/logout
-
-PATCH  /api/v1/users/updateMe
-PATCH  /api/v1/users/updateMyPassword
-```
-
-### Reviews
-
-```
-GET    /api/v1/reviews
-
-POST   /api/v1/tours/:tourId/reviews
-
-PATCH  /api/v1/reviews/:id
-
-DELETE /api/v1/reviews/:id
-```
-
-### Bookings
-
-```
-GET /api/v1/bookings/checkout-session/:tourId
+```bash
+npm start
 ```
 
 ---
 
-## 📚 Learning Goals
+## 🔑 Environment Variables
 
-This project was built to practice:
+Example:
 
-- REST API Design
-- Express.js
-- MongoDB & Mongoose
+```env
+NODE_ENV=development
+PORT=3000
+
+DATABASE=your_mongodb_connection_string
+DATABASE_PASSWORD=your_password
+
+JWT_SECRET=your_secret
+JWT_EXPIRES_IN=90d
+JWT_COOKIE_EXPIRES_IN=90
+
+EMAIL_HOST=
+EMAIL_PORT=
+EMAIL_USERNAME=
+EMAIL_PASSWORD=
+EMAIL_FROM=
+
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+```
+
+---
+
+## 📂 Project Structure
+
+```
+controllers/
+models/
+routes/
+views/
+public/
+utils/
+dev-data/
+server.js
+app.js
+```
+
+---
+
+## 📸 Screenshots
+
+### Home Page
+
+![Home](https://natours-node-express.onrender.com/img/logo-green.png)
+
+---
+
+## 📖 What I Learned
+
+This project helped me gain hands-on experience with:
+
+- RESTful API Design
 - Authentication & Authorization
-- File Uploads
-- Payments with Stripe
-- Security Best Practices
 - MVC Architecture
-
----
-
-## 🙏 Acknowledgements
-
-This project was built while following the course:
-
-**The Complete Node.js, Express, MongoDB & More Bootcamp**
-
-by **Jonas Schmedtmann**
-
-The implementation, exercises, and additional features were completed for learning purposes.
+- MongoDB Aggregation
+- Geospatial Queries
+- File Uploads
+- Email Services
+- Payment Integration
+- Production Deployment
+- Security Best Practices
 
 ---
 
@@ -244,11 +173,13 @@ The implementation, exercises, and additional features were completed for learni
 **Parisa Montakhabi**
 
 GitHub:
-
 https://github.com/parisaMontakhab
+
+LinkedIn:
+https://www.linkedin.com/in/parisa-montakhabi-sani-44a563232/
 
 ---
 
 ## 📄 License
 
-Educational project created for learning purposes.
+This project was built as part of Jonas Schmedtmann's **Node.js Bootcamp**, extended and deployed independently for learning purposes.
