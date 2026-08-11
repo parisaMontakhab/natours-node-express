@@ -38,3 +38,9 @@ exports.getMyTours = catchAsync(async (req, res, next) => {
 
   res.status(200).render('overview', { title: 'My Tours', tours });
 });
+
+exports.getSignupForm = (req, res) => {
+  res.status(200).render('signup', {
+    title: 'Sign up',
+  });
+};
